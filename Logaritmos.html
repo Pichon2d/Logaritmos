@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Logaritmos: guía de álgebra con práctica interactiva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f0f4f8;--card:#fff;--ink:#0e1a2b;--mut:#51627a;--ac:#2447d6;--am:#c97a00;--line:#d5dde8;--ok:#0f7a4a;--bad:#b42318;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1524;--card:#121f33;--ink:#e7eef9;--mut:#9fb0c8;--ac:#8aa8ff;--am:#f2b84b;--line:#23344d;--ok:#4ade80;--bad:#ff8a80}}
+:root[data-theme="dark"]{--bg:#0b1524;--card:#121f33;--ink:#e7eef9;--mut:#9fb0c8;--ac:#8aa8ff;--am:#f2b84b;--line:#23344d;--ok:#4ade80;--bad:#ff8a80}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.7 "Source Serif 4",Georgia,serif}
+h1,h2,h3,nav,button,label,.brand{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif}
+a{color:var(--ac)}
+:focus-visible{outline:3px solid var(--am);outline-offset:2px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav{max-width:1040px;margin:auto;padding:12px 20px;display:flex;gap:22px;align-items:center;overflow-x:auto;white-space:nowrap;font-size:15px}
+nav a{text-decoration:none;color:var(--mut);font-weight:500}nav a:hover{color:var(--ink)}
+.brand{font-weight:800;color:var(--ink);font-size:18px;margin-right:auto}
+main,.hero>div{max-width:1040px;margin:auto;padding:0 20px}
+.hero{background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:32px 32px;border-bottom:1px solid var(--line)}
+.hero>div{padding-top:64px;padding-bottom:56px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+h1{font-size:clamp(34px,5.4vw,60px);line-height:1.04;margin:0 0 18px;font-weight:800;letter-spacing:-.02em}
+.lead{font-size:20px;color:var(--mut);max-width:34em;margin:0}
+h2{font-size:clamp(26px,3.6vw,36px);margin:0 0 12px;letter-spacing:-.01em}
+h3{font-size:19px;margin:0 0 6px}
+section{padding:64px 0 8px}
+p{max-width:44em}
+.f{font-style:italic;font-size:1.15em}
+.eq{display:block;background:var(--card);border-left:4px solid var(--ac);padding:12px 18px;margin:14px 0;font-style:italic;font-size:1.25em;overflow-x:auto}
+.tool{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 10px 30px -18px rgba(14,26,43,.45)}
+.row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+label{font-size:14px;color:var(--mut);display:flex;flex-direction:column;gap:4px;font-weight:500}
+input,select{font:inherit;font-size:18px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:130px}
+#out{min-height:78px;display:flex;flex-direction:column;gap:6px;font-size:1.2em}
+#out .f:first-child{color:var(--am);font-weight:600}
+.props{margin:20px 0 0;border-top:1px solid var(--line)}
+.props>div{display:grid;grid-template-columns:200px 1fr;gap:6px 24px;padding:16px 0;border-bottom:1px solid var(--line)}
+.props dt{font-family:"Bricolage Grotesque",sans-serif;font-weight:700}
+.props dd{margin:0}.props .f{display:block;font-size:1.2em}
+.props small{color:var(--mut);font-size:15px}
+table{border-collapse:collapse;width:100%;max-width:640px;margin:16px 0;background:var(--card)}
+th,td{border:1px solid var(--line);padding:9px 14px;text-align:left}
+th{font-family:"Bricolage Grotesque",sans-serif;font-size:15px;color:var(--mut)}
+.wrap{overflow-x:auto}
+canvas{width:100%;aspect-ratio:3/2;max-height:480px;display:block;border-radius:8px}
+.leg{display:flex;gap:20px;flex-wrap:wrap;font-size:15px;color:var(--mut);margin-top:10px}
+.leg i{display:inline-block;width:22px;height:4px;vertical-align:middle;margin-right:6px;border-radius:2px}
+.ex{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:20px 24px;margin:20px 0}
+.ex ol{margin:8px 0 0;padding-left:22px}.ex li{margin:4px 0}
+.uses{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:20px}
+.uses div{border-top:3px solid var(--am);padding-top:10px}
+.uses p{font-size:16px;margin:4px 0 0;color:var(--mut)}
+.warn li{margin:8px 0}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:16px 0}
+.q p{margin:0 0 10px;font-weight:600}
+.opts{display:flex;gap:10px;flex-wrap:wrap}
+button{font-size:16px;padding:9px 16px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer;font-weight:500}
+button:hover:not(:disabled){border-color:var(--ac)}
+button.ok{background:var(--ok);color:#fff;border-color:var(--ok)}button.no{background:var(--bad);color:#fff;border-color:var(--bad)}
+.fb{margin-top:10px;font-size:16px;color:var(--mut);min-height:1.7em}
+#score{font-family:"Bricolage Grotesque",sans-serif;font-weight:700}
+footer{margin-top:72px;border-top:1px solid var(--line);padding:28px 20px;text-align:center;color:var(--mut);font-size:15px}
+@media(max-width:760px){.hero>div{grid-template-columns:1fr;padding-top:40px}.props>div{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><nav aria-label="Secciones"><span class="brand">Logaritmos</span><a href="#definicion">Definición</a><a href="#propiedades">Propiedades</a><a href="#grafica">Gráfica</a><a href="#ecuaciones">Ecuaciones</a><a href="#usos">Usos</a><a href="#practica">Práctica</a></nav></header>
+
+<div class="hero"><div>
+<div>
+<h1>¿A qué exponente hay que elevar la base?</h1>
+<p class="lead">Eso es un logaritmo. Es la operación inversa de la potenciación y sirve para despejar exponentes, comparar magnitudes enormes y resolver ecuaciones que el álgebra común no alcanza.</p>
+</div>
+<div class="tool" role="group" aria-label="Calculadora de logaritmos">
+<h3>Calculadora de logaritmos</h3>
+<div class="row">
+<label>Base<input id="b" type="number" value="2" step="any" inputmode="decimal"></label>
+<label>Número<input id="x" type="number" value="8" step="any" inputmode="decimal"></label>
+</div>
+<div id="out" aria-live="polite"></div>
+</div>
+</div></div>
+
+<main>
+<section id="definicion">
+<h2>Definición</h2>
+<p>El logaritmo de <i>x</i> en base <i>b</i> es el exponente <i>y</i> que cumple <i>b<sup>y</sup></i> = <i>x</i>. Las dos formas dicen lo mismo, y saber pasar de una a otra es la habilidad central del tema.</p>
+<span class="eq">log<sub>b</sub>(x) = y &nbsp;⟺&nbsp; b<sup>y</sup> = x</span>
+<p>Para que tenga sentido se exige <i>b</i> &gt; 0, <i>b</i> ≠ 1 y <i>x</i> &gt; 0. No existe el logaritmo de cero ni de un número negativo, porque ninguna potencia positiva da ese resultado.</p>
+<div class="wrap"><table>
+<tr><th>Forma logarítmica</th><th>Forma exponencial</th><th>Lectura</th></tr>
+<tr><td>log<sub>2</sub>(8) = 3</td><td>2<sup>3</sup> = 8</td><td>2 elevado a 3 da 8</td></tr>
+<tr><td>log<sub>10</sub>(1000) = 3</td><td>10<sup>3</sup> = 1000</td><td>10 elevado a 3 da 1000</td></tr>
+<tr><td>log<sub>5</sub>(1/25) = −2</td><td>5<sup>−2</sup> = 1/25</td><td>exponente negativo, fracción</td></tr>
+</table></div>
+<h3>Dos bases con nombre propio</h3>
+<p><b>Logaritmo común:</b> log(<i>x</i>) significa base 10. <b>Logaritmo natural:</b> ln(<i>x</i>) significa base <i>e</i> ≈ 2,71828, el número que aparece en el crecimiento continuo.</p>
+</section>
+
+<section id="propiedades">
+<h2>Propiedades</h2>
+<p>Los logaritmos convierten productos en sumas y potencias en productos. Con ellas se simplifica casi cualquier expresión. Todas valen para <i>M</i>, <i>N</i> &gt; 0.</p>
+<dl class="props">
+<div><dt>Producto</dt><dd><span class="f">log<sub>b</sub>(M·N) = log<sub>b</sub>M + log<sub>b</sub>N</span><small>Multiplicar dentro equivale a sumar fuera.</small></dd></div>
+<div><dt>Cociente</dt><dd><span class="f">log<sub>b</sub>(M/N) = log<sub>b</sub>M − log<sub>b</sub>N</span><small>Dividir dentro equivale a restar fuera.</small></dd></div>
+<div><dt>Potencia</dt><dd><span class="f">log<sub>b</sub>(M<sup>k</sup>) = k·log<sub>b</sub>M</span><small>El exponente baja y multiplica. Con ella se despejan incógnitas en el exponente.</small></dd></div>
+<div><dt>Cambio de base</dt><dd><span class="f">log<sub>b</sub>x = log x / log b = ln x / ln b</span><small>Permite calcular cualquier base con una calculadora que solo tiene log y ln.</small></dd></div>
+<div><dt>Identidades</dt><dd><span class="f">log<sub>b</sub>1 = 0 &nbsp; log<sub>b</sub>b = 1 &nbsp; b<sup>log<sub>b</sub>x</sup> = x</span><small>Cualquier base elevada a 0 da 1, y elevada a 1 da la misma base.</small></dd></div>
+</dl>
+</section>
+
+<section id="grafica">
+<h2>La gráfica</h2>
+<p>Elige una base y observa. La curva logarítmica (ámbar) y la exponencial (azul) son reflejos una de la otra respecto de la recta <i>y</i> = <i>x</i>, porque son funciones inversas. Toda curva logarítmica pasa por (1, 0) y por (<i>b</i>, 1).</p>
+<div class="tool">
+<div class="row"><label>Base<select id="base"><option value="0.5">1/2</option><option value="2" selected>2</option><option value="2.718281828">e</option><option value="10">10</option></select></label></div>
+<canvas id="cv" role="img" aria-label="Gráfica de la función exponencial y de la logarítmica con la base elegida"></canvas>
+<div class="leg"><span><i style="background:var(--ac)"></i>y = b<sup>x</sup></span><span><i style="background:var(--am)"></i>y = log<sub>b</sub>(x)</span><span><i style="background:var(--mut)"></i>y = x</span></div>
+<p id="cap" style="font-size:16px;color:var(--mut);margin-bottom:0"></p>
+</div>
+</section>
+
+<section id="ecuaciones">
+<h2>Ecuaciones resueltas</h2>
+<div class="ex"><h3>Ecuación logarítmica con dos términos</h3>
+<span class="eq">log<sub>2</sub>(x) + log<sub>2</sub>(x − 2) = 3</span>
+<ol><li>Aplica la propiedad del producto: log<sub>2</sub>[x(x − 2)] = 3.</li>
+<li>Pasa a forma exponencial: x(x − 2) = 2<sup>3</sup> = 8.</li>
+<li>Ordena: x² − 2x − 8 = 0, que factoriza como (x − 4)(x + 2) = 0.</li>
+<li>Verifica el dominio (x &gt; 2): x = −2 no sirve. <b>Solución: x = 4.</b></li></ol></div>
+<div class="ex"><h3>Incógnita en el exponente</h3>
+<span class="eq">3<sup>x</sup> = 20</span>
+<ol><li>Aplica log a ambos lados: log(3<sup>x</sup>) = log 20.</li>
+<li>Baja el exponente: x·log 3 = log 20.</li>
+<li>Despeja: x = log 20 / log 3 ≈ 1,3010 / 0,4771. <b>Solución: x ≈ 2,727.</b></li></ol></div>
+<div class="ex"><h3>Diferencia de logaritmos</h3>
+<span class="eq">log(x + 1) − log(x − 1) = 1</span>
+<ol><li>Aplica la propiedad del cociente: log[(x + 1)/(x − 1)] = 1.</li>
+<li>Forma exponencial en base 10: (x + 1)/(x − 1) = 10.</li>
+<li>Resuelve: x + 1 = 10x − 10, así que 9x = 11.</li>
+<li>Verifica el dominio (x &gt; 1): 11/9 cumple. <b>Solución: x = 11/9 ≈ 1,222.</b></li></ol></div>
+</section>
+
+<section id="usos">
+<h2>Dónde se usan</h2>
+<p>Las escalas logarítmicas aparecen cuando los datos abarcan muchos órdenes de magnitud.</p>
+<div class="uses">
+<div><h3>Acidez (pH)</h3><p>pH = −log[H⁺]. Bajar una unidad de pH significa diez veces más iones de hidrógeno.</p></div>
+<div><h3>Sonido (decibelios)</h3><p>dB = 10·log(I/I₀). Cada 10 dB la intensidad se multiplica por diez.</p></div>
+<div><h3>Sismos (Richter)</h3><p>Cada punto de magnitud equivale a una amplitud de onda diez veces mayor.</p></div>
+<div><h3>Finanzas</h3><p>Para duplicar un capital al 5 % anual: t = ln 2 / ln 1,05 ≈ 14,2 años.</p></div>
+</div>
+</section>
+
+<section id="errores">
+<h2>Errores frecuentes</h2>
+<ul class="warn">
+<li>log(M + N) <b>no</b> es log M + log N. La suma solo aparece cuando se multiplica por dentro.</li>
+<li>log M / log N <b>no</b> es log(M/N). Ese cociente es un cambio de base.</li>
+<li>(log M)<sup>k</sup> <b>no</b> es k·log M. La propiedad de la potencia afecta al argumento, no al logaritmo completo.</li>
+<li>Olvidar verificar el dominio: toda solución debe dejar positivos los argumentos originales.</li>
+</ul>
+</section>
+
+<section id="practica">
+<h2>Ponte a prueba</h2>
+<p>Elige una respuesta en cada pregunta. Puntaje: <span id="score">0 de 3</span></p>
+<div id="quiz"></div>
+</section>
+</main>
+<footer>Guía de álgebra: logaritmos. Hecha para estudiar, practicar y repasar.</footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const fmt=n=>String(+n.toFixed(6));
+function calc(){
+  const b=parseFloat($('#b').value),x=parseFloat($('#x').value),o=$('#out');
+  if(!(b>0)||b===1){o.textContent='La base debe ser positiva y distinta de 1.';return}
+  if(!(x>0)){o.textContent='El número debe ser mayor que 0.';return}
+  const y=Math.log(x)/Math.log(b),eq=Number.isInteger(+y.toFixed(6))?'=':'≈';
+  o.innerHTML=`<span class="f">log<sub>${fmt(b)}</sub>(${fmt(x)}) = ${fmt(y)}</span><span class="f">${fmt(b)}<sup>${fmt(y)}</sup> ${eq} ${fmt(x)}</span>`;
+}
+$('#b').oninput=$('#x').oninput=calc;calc();
+
+function draw(){
+  const c=$('#cv'),r=c.getBoundingClientRect(),d=window.devicePixelRatio||1;
+  c.width=r.width*d;c.height=r.height*d;
+  const g=c.getContext('2d');g.scale(d,d);
+  const W=r.width,H=r.height,S=getComputedStyle(document.documentElement),col=k=>S.getPropertyValue(k).trim();
+  const x0=-3,x1=9,y0=-4,y1=8,X=x=>(x-x0)/(x1-x0)*W,Y=y=>H-(y-y0)/(y1-y0)*H;
+  g.clearRect(0,0,W,H);g.lineWidth=1;g.strokeStyle=col('--line');
+  for(let i=x0;i<=x1;i++){g.beginPath();g.moveTo(X(i),0);g.lineTo(X(i),H);g.stroke()}
+  for(let j=y0;j<=y1;j++){g.beginPath();g.moveTo(0,Y(j));g.lineTo(W,Y(j));g.stroke()}
+  g.strokeStyle=col('--ink');g.lineWidth=1.5;
+  g.beginPath();g.moveTo(X(0),0);g.lineTo(X(0),H);g.moveTo(0,Y(0));g.lineTo(W,Y(0));g.stroke();
+  const b=+$('#base').value;
+  const line=(f,a,z,color,dash)=>{g.beginPath();g.setLineDash(dash||[]);g.strokeStyle=color;g.lineWidth=2.5;let s=true;
+    for(let t=a;t<=z;t+=(z-a)/900){const v=f(t);if(!isFinite(v)){s=true;continue}g[s?'moveTo':'lineTo'](X(t),Y(v));s=false}
+    g.stroke();g.setLineDash([])};
+  line(t=>t,x0,x1,col('--mut'),[6,6]);
+  line(t=>Math.pow(b,t),x0,x1,col('--ac'));
+  line(t=>Math.log(t)/Math.log(b),0.0005,x1,col('--am'));
+  $('#cap').textContent=b<1?'Con base menor que 1 las dos funciones decrecen.':'Con base mayor que 1 las dos funciones crecen; la logarítmica crece cada vez más despacio.';
+}
+$('#base').onchange=draw;addEventListener('resize',draw);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);draw();
+
+const Q=[
+["¿Cuánto vale log<sub>3</sub>(81)?",["3","4","27","9"],1,"3⁴ = 81, así que el exponente buscado es 4."],
+["log 5 + log 20 es igual a…",["log 25","1","2","log 15"],2,"Por la propiedad del producto: log(5·20) = log 100 = 2."],
+["Si 2<sup>x</sup> = 7, entonces x vale…",["7 / 2","log 7 / log 2","log 2 / log 7","log(7 − 2)"],1,"Aplica log a ambos lados: x·log 2 = log 7, luego x = log 7 / log 2."]
+];
+let pts=0,done=0;
+Q.forEach((q,i)=>{
+  const el=document.createElement('div');el.className='q';
+  el.innerHTML=`<p>${q[0]}</p><div class="opts"></div><div class="fb" aria-live="polite"></div>`;
+  const box=el.querySelector('.opts');
+  q[1].forEach((t,j)=>{
+    const bt=document.createElement('button');bt.textContent=t;
+    bt.onclick=()=>{
+      const bs=box.children;for(const k of bs)k.disabled=true;
+      const right=j===q[2];bs[q[2]].classList.add('ok');if(!right)bt.classList.add('no');
+      el.querySelector('.fb').textContent=(right?'Correcto. ':'Casi. ')+q[3];
+      done++;if(right)pts++;
+      $('#score').textContent=pts+' de '+Q.length+(done===Q.length?' (terminaste)':'');
+    };
+    box.appendChild(bt);
+  });
+  $('#quiz').appendChild(el);
+});
+</script>
+</body>
+</html>
